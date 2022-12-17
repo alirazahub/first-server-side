@@ -25,13 +25,10 @@ mongoose.connection.on('error', (err) => {
     console.log('Error connecting to mongoDB', err);
 });
 
-app.get('/', requireToken, (req, res) => {
-    res.send(`Your email: ${req.user.email}`);
-    })
-
-    app.get('/custom', (req, res) => {
-        res.status(500).json({msg: "Something"});
-        })
+app.get('/check', requireToken, (req, res) => {
+    res.status(200).send({email: req.user.email}
+    );
+});
 
 app.listen(PORT, () => {
     console.log(`This app listening at http://localhost:${PORT}`)
