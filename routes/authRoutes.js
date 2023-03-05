@@ -44,9 +44,10 @@ router.post('/signin', async(req, res) => {
         const isMatch = await user.comparePassword(password);
         if(!isMatch){
             return res.status(422).json({error: "Invalid email or password"});
+        }else{
+            const token = jwt.sign({userId:user._id}, jwtSecret);
+            res.status(200).json({message: "User Logged In Successfully",token: token});
         }
-        const token = jwt.sign({userId:user._id}, jwtSecret);
-        res.status(200).json({message: "User Logged In Successfully",token: token});
     } catch (error) {
         res.status(500).json({error: "Something went wrong",message: error.message});
     }
